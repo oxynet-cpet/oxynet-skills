@@ -119,7 +119,7 @@ CLI gallery indexes it on its own. Checked first: the skill fires from its descr
 The MCP server is **published in Anthropic's Connectors Directory** (2026-10-20), submitted
 as an **MCP connector** from the founder's own account; the texts as sent are in the
 orchestration repo, `docs/listings/anthropic-directory.md`. The plugin follows from
-claude.ai/directory/manage as a **Plugin bundle**, repository `andreazignoli/oxynet-skills`,
+claude.ai/directory/manage as a **Plugin bundle**, repository `oxynet-cpet/oxynet-skills` (submitted as `andreazignoli/oxynet-skills`; moved 2026-11-04, the old address redirects),
 plugin path `claude`. A plugin may connect to any connector approved in the directory, so the
 listing also clears the plugin's one MCP server.
 

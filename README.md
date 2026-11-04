@@ -19,7 +19,7 @@ system, the one command that saves it as `OXYNET_API_KEY`.
 **Claude Code**
 
 ```
-/plugin marketplace add andreazignoli/oxynet-skills
+/plugin marketplace add oxynet-cpet/oxynet-skills
 /plugin install oxynet@oxynet
 ```
 
@@ -31,7 +31,7 @@ there (claude.ai, Settings, Connectors) and the plugin's skill uses its tools.
 **Gemini CLI**
 
 ```
-gemini extensions install https://github.com/andreazignoli/oxynet-skills
+gemini extensions install https://github.com/oxynet-cpet/oxynet-skills
 ```
 
 **Any tool that reads Agent Skills:** copy `skills/oxynet-cpet/` into that tool's skills

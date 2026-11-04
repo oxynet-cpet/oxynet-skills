@@ -8,7 +8,7 @@
     "url": "https://www.oxynet.net"
   },
   "homepage": "https://www.oxynet.net/developers/mcp",
-  "repository": "https://github.com/andreazignoli/oxynet-skills",
+  "repository": "https://github.com/oxynet-cpet/oxynet-skills",
   "license": "Apache-2.0",
   "keywords": [
     "cpet",
@@ -19,7 +19,7 @@
   ],
   "icon": "./icon.svg",
   "documentationUrl": "https://www.oxynet.net/developers/mcp",
-  "supportUrl": "https://github.com/andreazignoli/oxynet-skills/issues",
+  "supportUrl": "https://github.com/oxynet-cpet/oxynet-skills/issues",
   "privacyPolicyUrl": "https://www.oxynet.net/privacy",
   "termsOfServiceUrl": "https://www.oxynet.net/terms"
 }
