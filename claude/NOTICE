@@ -2,7 +2,7 @@ Oxynet skill
 Copyright 2026 Andrea Zignoli
 
 This product includes the Oxynet skill by Andrea Zignoli
-(https://github.com/andreazignoli/oxynet-skills), which teaches AI agents to
+(https://github.com/oxynet-cpet/oxynet-skills), which teaches AI agents to
 analyse cardiopulmonary exercise tests with Oxynet (https://www.oxynet.net).
 
 Licensed under the Apache License, Version 2.0 (see LICENSE). Under section
