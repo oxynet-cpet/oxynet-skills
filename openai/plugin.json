@@ -1,15 +1,15 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "oxynet",
-  "version": "1.0.1",
-  "description": "Analyse cardiopulmonary exercise test (CPET) files with Oxynet: ventilatory thresholds, substrate use, oscillatory ventilation and signal quality, computed by validated models.",
+  "version": "1.0.2",
+  "description": "Analyse cardiopulmonary exercise test (CPET) files with Oxynet: ventilatory thresholds, substrate use, oscillatory ventilation (beta) and signal quality, computed by validated models.",
   "author": {
     "name": "Andrea Zignoli",
     "email": "andrea.zignoli@unitn.it",
     "url": "https://www.oxynet.net"
   },
   "homepage": "https://www.oxynet.net/developers/mcp",
-  "repository": "https://github.com/andreazignoli/oxynet-skills",
+  "repository": "https://github.com/oxynet-cpet/oxynet-skills",
   "license": "Apache-2.0",
   "keywords": [
     "cpet",
@@ -23,7 +23,7 @@
       "interface": {
         "displayName": "Oxynet",
         "shortDescription": "Exercise test (CPET) analysis",
-        "longDescription": "Oxynet turns the raw export of a cardiopulmonary exercise test (CPET) into structured, versioned measurements. Give ChatGPT a metabolic cart file (COSMED, Cortex, PNOE, VO2 Master and other formats, detected automatically) and ask: Oxynet returns the ventilatory thresholds VT1 and VT2, fat and carbohydrate oxidation with FATMAX, exercise oscillatory ventilation, and checks on the quality of the recording. ChatGPT routes the question and explains the answer; Oxynet's validated models, described in peer-reviewed publications, compute the physiology.\n\nWho it is for: exercise physiologists, sports scientists, coaches, researchers and students who work with CPET recordings.\n\nHow it works: the recording is uploaded unchanged and analysed on Oxynet's servers by handle. Each result carries its provenance and a quality grade for the recording. A refusal states its reason, for example when a channel an analysis needs is missing. To try it without any data, ask for Oxynet's synthetic sample.\n\nPrivacy: Oxynet reads each file and discards it, keeps the parsed recording for 24 hours, and never trains its models on uploads. It needs no personal identifiers: remove names and dates of birth from an export before sharing it.\n\nLimitations: research software, not a diagnostic device, and it gives measurements, not clinical conclusions. No result carries a confidence score, because nothing is calibrated against clinical outcomes. Oscillatory ventilation analysis is beta: it was developed on one heart failure cohort and its transportability is untested.\n\nAn Oxynet API key is needed to connect: a free key takes a minute at app.oxynet.net/signup (sign in with Google or GitHub), and it is entered once on Oxynet's sign-in page.",
+        "longDescription": "Oxynet turns the raw export of a cardiopulmonary exercise test (CPET) into structured, versioned measurements. Give ChatGPT a metabolic cart file (COSMED, Cortex, PNOE, VO2 Master and other formats, detected automatically) and ask: Oxynet returns the ventilatory thresholds VT1 and VT2, fat and carbohydrate oxidation with FATMAX, exercise oscillatory ventilation, and checks on the quality of the recording. ChatGPT routes the question and explains the answer; Oxynet's validated models, described in peer-reviewed publications, compute the physiology.\n\nWho it is for: exercise physiologists, sports scientists, coaches, researchers and students who work with CPET recordings.\n\nHow it works: the recording is uploaded unchanged and analysed on Oxynet's servers by handle. Each result carries its provenance and a quality grade for the recording. A refusal states its reason, for example when a channel an analysis needs is missing. To try it without any data, ask for Oxynet's synthetic sample.\n\nPrivacy: Oxynet reads each file and discards it, keeps the parsed recording for 24 hours, and never trains its models on uploads. It needs no personal identifiers: remove names and dates of birth from an export before sharing it.\n\nLimitations: research software, not a diagnostic device, and it gives measurements, not clinical conclusions. No result carries a numeric confidence, because nothing is calibrated against clinical outcomes; an answer that looks unusual is marked low confidence, with the reason. Oscillatory ventilation analysis is beta: it was developed on one heart failure cohort and its transportability is untested.\n\nAn Oxynet API key is needed to connect: a free key takes a minute at app.oxynet.net/signup (sign in with Google or GitHub), and it is entered once on Oxynet's sign-in page.",
         "developerName": "Andrea Zignoli",
         "category": "Education & Research",
         "capabilities": [
@@ -59,7 +59,7 @@
               "description": "Ventilatory thresholds on the synthetic sample",
               "prompt": "Load the Oxynet synthetic sample and give me its ventilatory thresholds.",
               "tools_triggered": "get_sample_cpet, analyze_vt",
-              "expected_behavior": "Reports VT1 at about 562 s (VO2 about 2,386 mL/min) and VT2 at about 726 s (VO2 about 2,951 mL/min), says the sample is synthetic and not validation data, and gives no confidence percentage."
+              "expected_behavior": "Reports VT1 at about 572 s (VO2 about 2,420 mL/min) and VT2 at about 730 s (VO2 about 2,963 mL/min), says the sample is synthetic and not validation data, and gives no confidence percentage."
             },
             {
               "description": "Derived metrics and substrate use on the synthetic sample",
@@ -99,7 +99,7 @@
         "commerce_description": "Oxynet sells nothing in ChatGPT. API keys are free and issued at app.oxynet.net/signup."
       },
       "publication": {
-        "release_notes": "One tool per analysis: analyze_vt, analyze_eov and analyze_substrate replace analyze_cpet, which took a list of analysis names. Ventilatory thresholds, substrate use, oscillatory ventilation (beta) and recording quality from CPET exports, through Oxynet's MCP server with OAuth sign-in."
+        "release_notes": "assess_cpet gives everything that applies to a recording in one call: each analysis the key includes that the recording supports, the derived metrics, a headline and a plan saying why any part did not run. Every result carries a confidence category (low or normal, with the reasons; never a number) and what its analysis read. With no model named, Oxynet answers with the best available method for the recording. Ventilatory thresholds, substrate use, oscillatory ventilation (beta) and recording quality from CPET exports, through Oxynet's MCP server with OAuth sign-in."
       }
     }
   }

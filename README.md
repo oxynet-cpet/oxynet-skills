@@ -19,7 +19,7 @@ system, the one command that saves it as `OXYNET_API_KEY`.
 **Claude Code**
 
 ```
-/plugin marketplace add andreazignoli/oxynet-skills
+/plugin marketplace add oxynet-cpet/oxynet-skills
 /plugin install oxynet@oxynet
 ```
 
@@ -31,7 +31,7 @@ there (claude.ai, Settings, Connectors) and the plugin's skill uses its tools.
 **Gemini CLI**
 
 ```
-gemini extensions install https://github.com/andreazignoli/oxynet-skills
+gemini extensions install https://github.com/oxynet-cpet/oxynet-skills
 ```
 
 **Any tool that reads Agent Skills:** copy `skills/oxynet-cpet/` into that tool's skills
@@ -49,8 +49,9 @@ FATMAX), exercise oscillatory ventilation and signal-quality checks as structure
 versioned JSON. The assistant routes the question and explains the answer; Oxynet's
 validated models decide the physiology.
 
-Research software, not a diagnostic device. Results carry no confidence score, because
-nothing is calibrated against clinical outcomes. Oscillatory ventilation analysis is beta:
+Research software, not a diagnostic device. Results carry no numeric confidence, because
+nothing is calibrated against clinical outcomes; an answer that looks unusual is marked
+low confidence, with the stated reason. Oscillatory ventilation analysis is beta:
 it was developed on one heart failure cohort and its transportability is untested.
 
 The agent sends the file you name and nothing else. Oxynet parses the bytes and discards

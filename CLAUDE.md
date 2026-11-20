@@ -52,7 +52,10 @@ show, although the public agent-plugins.org 1.0.0 schema does not allow it there
 refuses it, delete the block, since the server advertises DCR by discovery anyway. Category is
 Education & Research, not Healthcare, matching the research-only terms. `brandColor` is the
 registry's gradient blue because the Oxynet green fails OpenAI's 2:1 contrast on white (1.8).
-The expected results in the review cases were run against a local server on 2026-10-20.
+The expected results in the review cases were run against a local server on 2026-10-20,
+except the thresholds case, recorded live on core v86 (2026-11-20) with a free sign-up-shaped
+key: with no model named the committee answers (VT1 572 s, 2,420 mL/min; VT2 730 s, 2,963).
+Re-record it whenever the routed default changes.
 
 **A claude.ai Oxynet connector hides the plugin's server.** Claude Code suppresses a plugin
 MCP server whose URL duplicates a claude.ai connector (its debug log: "Lazy dedup:

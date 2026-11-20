@@ -6,8 +6,9 @@ thresholds (VT1 and VT2), substrate use (fat and carbohydrate oxidation, FATMAX)
 oscillatory ventilation, or the quality of the recording. The assistant routes the question
 and explains the answer; Oxynet's validated models compute the physiology.
 
-Research software, not a diagnostic device. Results carry no confidence score, because
-nothing is calibrated against clinical outcomes. Oscillatory ventilation analysis is beta:
+Research software, not a diagnostic device. Results carry no numeric confidence, because
+nothing is calibrated against clinical outcomes; an answer that looks unusual is marked
+low confidence, with the stated reason. Oscillatory ventilation analysis is beta:
 it was developed on one heart failure cohort and its transportability is untested.
 
 ## What this plugin contains

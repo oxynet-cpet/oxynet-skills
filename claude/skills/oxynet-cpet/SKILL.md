@@ -1,6 +1,6 @@
 ---
 name: oxynet-cpet
-description: Analyse cardiopulmonary exercise test (CPET) files with Oxynet. Use when the user has a metabolic cart export (COSMED, Cortex, PNOE, VO2 Master and other formats, as CSV, XLSX, TXT, XML or JSON) or asks for ventilatory thresholds (VT1, VT2, GET, RCP), VO2max, the VE/VCO2 slope, FATMAX or fat and carbohydrate oxidation, exercise oscillatory ventilation, or the signal quality of a CPET recording. Oxynet's validated models compute the physiology through the Oxynet tools this plugin connects; do not estimate thresholds from the trace yourself.
+description: Analyse cardiopulmonary exercise test (CPET) files with Oxynet. Use when the user has a metabolic cart export (COSMED, Cortex, PNOE, VO2 Master and other formats, as CSV, XLSX, TXT, XML or JSON) or asks for ventilatory thresholds (VT1, VT2, GET, RCP), VO2max, the VE/VCO2 slope, FATMAX or fat and carbohydrate oxidation, exercise oscillatory ventilation (beta), or the signal quality of a CPET recording. Oxynet's validated models compute the physiology through the Oxynet tools this plugin connects; do not estimate thresholds from the trace yourself.
 license: Apache-2.0
 ---
 
@@ -28,16 +28,29 @@ new session. Someone without a key can get a free one at https://app.oxynet.net/
 4. **Work by handle.** Never read the recording into the conversation. `get_cpet_series`
    is for drawing a picture, never for computing something Oxynet can compute.
 5. **Ask for the smallest thing that answers the question.** Each analysis is its own
-   tool: `analyze_vt`, `analyze_eov` and `analyze_substrate`. `compute_metrics` with
-   `substrate_summary` answers "what is their FATMAX" at a fraction of the cost. Each analysis spends one of the key's monthly
-   allowance.
-6. **A refusal is the answer.** `not_analysable`, `unavailable` or an error code states why;
-   report that reason instead of working around it.
-7. **There is no confidence score.** Nothing is calibrated against clinical outcomes, so
-   never invent one. `quality` describes the recording, not the certainty of the answer.
-8. **Oscillatory ventilation (`eov`) is beta**: developed on one heart failure cohort,
+   tool: `analyze_vt`, `analyze_eov` and `analyze_substrate`. When the user wants
+   everything, `assess_cpet` gives the full answer in one call: every analysis the key
+   includes that the recording supports, the derived metrics, and a `plan` saying why any
+   part did not run. `compute_metrics` with `substrate_summary` answers "what is their
+   FATMAX" in a fraction of the tokens, not of the cost: a `compute_metrics` call counts
+   one unit of the key's monthly allowance, as each analysis that runs does.
+   `assess_cpet` counts its analyses only, and a refusal is free.
+6. **Leave the model to Oxynet.** Set `model_name` only when the user asks for a model.
+   Unset, Oxynet answers with the best available method for the recording and says which,
+   and why, in `provenance.selection`.
+7. **A refusal is the answer.** `not_analysable`, `unavailable` or an error code states why;
+   report that reason instead of working around it. The recording's
+   `preprocessing.checks` (in the upload's result and in `get_cpet`) announce a refusal
+   before any analysis runs: tell the user then.
+8. **There is no confidence score, only a confidence category.** Nothing is calibrated
+   against clinical outcomes, so never give or invent a number. Each result's
+   `confidence.level` is "low" or "normal", set by stated rules: when it is "low", say so
+   and relay what its `reasons` say (after `assess_cpet`, they are in each part's result,
+   not the headline). "normal" means no rule fired, not that the answer is certain.
+   `quality` describes the recording, not the certainty of the answer.
+9. **Oscillatory ventilation (`eov`) is beta**: developed on one heart failure cohort,
    transportability untested. Say so whenever you report it.
-9. **Research software, not a diagnosis.** Report measurements, not clinical conclusions.
+10. **Research software, not a diagnosis.** Report measurements, not clinical conclusions.
 
 To show what Oxynet does without patient data, use `get_sample_cpet`. Recordings are
 deleted after 24 hours; `delete_cpet` removes one sooner.
