@@ -49,8 +49,9 @@ FATMAX), exercise oscillatory ventilation and signal-quality checks as structure
 versioned JSON. The assistant routes the question and explains the answer; Oxynet's
 validated models decide the physiology.
 
-Research software, not a diagnostic device. Results carry no confidence score, because
-nothing is calibrated against clinical outcomes. Oscillatory ventilation analysis is beta:
+Research software, not a diagnostic device. Results carry no numeric confidence, because
+nothing is calibrated against clinical outcomes; an answer that looks unusual is marked
+low confidence, with the stated reason. Oscillatory ventilation analysis is beta:
 it was developed on one heart failure cohort and its transportability is untested.
 
 The agent sends the file you name and nothing else. Oxynet parses the bytes and discards
