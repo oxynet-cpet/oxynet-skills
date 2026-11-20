@@ -59,7 +59,7 @@
               "description": "Ventilatory thresholds on the synthetic sample",
               "prompt": "Load the Oxynet synthetic sample and give me its ventilatory thresholds.",
               "tools_triggered": "get_sample_cpet, analyze_vt",
-              "expected_behavior": "Reports VT1 at about [VT1_S] s (VO2 about [VT1_VO2] mL/min) and VT2 at about [VT2_S] s (VO2 about [VT2_VO2] mL/min), says the sample is synthetic and not validation data, and gives no confidence percentage."
+              "expected_behavior": "Reports VT1 at about 572 s (VO2 about 2,420 mL/min) and VT2 at about 730 s (VO2 about 2,963 mL/min), says the sample is synthetic and not validation data, and gives no confidence percentage."
             },
             {
               "description": "Derived metrics and substrate use on the synthetic sample",

@@ -53,9 +53,9 @@ refuses it, delete the block, since the server advertises DCR by discovery anywa
 Education & Research, not Healthcare, matching the research-only terms. `brandColor` is the
 registry's gradient blue because the Oxynet green fails OpenAI's 2:1 contrast on white (1.8).
 The expected results in the review cases were run against a local server on 2026-10-20,
-except the thresholds case: from core v86 an unnamed model is the best available method, so
-its values are placeholders (`[VT1_S]`, `[VT1_VO2]`, `[VT2_S]`, `[VT2_VO2]`) until a live
-`analyze_vt` on the synthetic sample records them. Fill them before the next upload.
+except the thresholds case, recorded live on core v86 (2026-11-20) with a free sign-up-shaped
+key: with no model named the committee answers (VT1 572 s, 2,420 mL/min; VT2 730 s, 2,963).
+Re-record it whenever the routed default changes.
 
 **A claude.ai Oxynet connector hides the plugin's server.** Claude Code suppresses a plugin
 MCP server whose URL duplicates a claude.ai connector (its debug log: "Lazy dedup:
