@@ -2,17 +2,72 @@
 
 Teaches AI agents to analyse cardiopulmonary exercise tests (CPET) with
 [Oxynet](https://www.oxynet.net): the agent hands Oxynet the vendor file, receives a handle,
-and asks for the analyses by name. Oxynet's validated models compute the physiology.
+and asks for the analyses by name. Oxynet's validated models compute the physiology. It also
+documents Oxynet's MCP server, which GitHub Copilot in VS Code and any other MCP client can
+connect to directly ([below](#the-oxynet-mcp-server)).
 
 | Tool | What to install | How it reaches Oxynet |
 |---|---|---|
 | Claude Code, Claude chat, Cowork | The plugin in [`claude/`](claude/) | The Oxynet MCP server; you sign in once with your key |
 | Gemini CLI | The extension (`gemini-extension.json`) | REST with curl, key in `OXYNET_API_KEY` |
 | OpenAI Codex, Cursor, GitHub Copilot and others | The skill in [`skills/oxynet-cpet/`](skills/oxynet-cpet/SKILL.md) | REST with curl, key in `OXYNET_API_KEY` |
+| VS Code with GitHub Copilot, or any MCP client | Nothing: [the MCP server](#the-oxynet-mcp-server) | Your key in the `X-API-Key` header, or sign in once |
 
 You need an Oxynet API key. Get a free one at
 [app.oxynet.net/signup](https://app.oxynet.net/signup): the page also gives you, for your
 system, the one command that saves it as `OXYNET_API_KEY`.
+
+## The Oxynet MCP server
+
+Oxynet runs a remote MCP server, listed in the official MCP Registry as `net.oxynet/cpet`:
+
+```
+https://app.oxynet.net/oxynet-mcp        (streamable HTTP)
+```
+
+The server is a hosted service: its code is not in this repository, which holds what teaches
+agents to use it. Any MCP client can connect, including VS Code with GitHub Copilot, Claude,
+Gemini CLI and Cursor.
+
+**Configure it.** Send your key in the `X-API-Key` header. In VS Code, add this to
+`.vscode/mcp.json` (or run **MCP: Add Server**). VS Code asks for the key once and keeps it out
+of the file:
+
+```json
+{
+  "inputs": [
+    {"type": "promptString", "id": "oxynet-key", "description": "Oxynet API key", "password": true}
+  ],
+  "servers": {
+    "oxynet": {
+      "type": "http",
+      "url": "https://app.oxynet.net/oxynet-mcp",
+      "headers": {"X-API-Key": "${input:oxynet-key}"}
+    }
+  }
+}
+```
+
+A client that supports MCP sign-in can leave the header out: a browser opens and Oxynet's page
+asks for the key once.
+
+**Use it.** Ask in plain words, for example "what are the ventilatory thresholds in
+`tests/athlete_03.xlsx`?" The agent uploads the file, receives a handle, and asks for the
+analyses by name:
+
+| Tool | What it does |
+|---|---|
+| `get_capabilities` | What this key may do. Call it first |
+| `get_sample_cpet` | A handle to a synthetic recording, to try Oxynet without data of your own |
+| `create_upload`, `upload_cpet` | Send a file: one-shot upload URLs, or the contents directly |
+| `get_cpet` | Format, channels, sampling, load and quality flags of an uploaded recording |
+| `assess_cpet` | Everything that applies to the recording, in one call |
+| `analyze_vt` | Ventilatory thresholds VT1 and VT2 |
+| `analyze_eov` | Exercise oscillatory ventilation (beta) |
+| `analyze_substrate` | Fat and carbohydrate use, FATMAX |
+| `list_metrics`, `compute_metrics` | Derived quantities (phases, gas quality, peaks) and what each needs |
+| `get_cpet_series` | A downsampled slice of the signals, for plotting; not for analysis |
+| `delete_cpet` | Delete a recording now, instead of at its 24-hour expiry |
 
 ## Install
 
