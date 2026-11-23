@@ -138,10 +138,15 @@ Every merge is a release (the directory scans it as a new version, and installs 
 `main`), so the orchestration repo's "Before any release, in any repo" applies here. Its
 CLAUDE.md loads only when this checkout sits under `~/oxynet`, not from a worktree elsewhere.
 
+First, from the orchestration repo: `python3 harness/align.py skills` (`--at PATH` for the
+branch checked out here). It probes every `/v1` path and `app.oxynet.net` link the skill and
+the plugins name against the live service, and blocks on a finding that names this repo.
+
 1. **Read what the skill states against the API that is live**, not a core branch: the `/v1`
    paths, analysis and metric names, refusal codes and the MCP tool names, against
-   `https://app.oxynet.net/llms-full.txt` and `/v1/openapi.json`. `registry.py check` does not
-   cover this repo, so a drift here shows up only as a refusal at run time.
+   `https://app.oxynet.net/llms-full.txt` and `/v1/openapi.json`. `align.py` checks the paths
+   but not the analysis and metric names, so a renamed one shows up only as a refusal at run
+   time.
 2. **Listing texts and review cases** follow the orchestration repo's `docs/listings/`; a fact
    in a manifest (tool count, what is beta) matches what the server serves today.
 3. **Run both `claude plugin validate` commands.**
