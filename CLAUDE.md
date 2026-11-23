@@ -131,3 +131,18 @@ only, JSON, secret held by GitHub) notifies the directory, so **every merge to `
 picked up and scanned as a new version**: run both `claude plugin validate` commands before
 merging. A lost webhook secret is replaced with Rotate secret on the plugin's Settings tab
 at claude.ai/directory/manage.
+
+## Before a merge to `main`: check alignment, not after
+
+Every merge is a release (the directory scans it as a new version, and installs come from
+`main`), so the orchestration repo's "Before any release, in any repo" applies here. Its
+CLAUDE.md loads only when this checkout sits under `~/oxynet`, not from a worktree elsewhere.
+
+1. **Read what the skill states against the API that is live**, not a core branch: the `/v1`
+   paths, analysis and metric names, refusal codes and the MCP tool names, against
+   `https://app.oxynet.net/llms-full.txt` and `/v1/openapi.json`. `registry.py check` does not
+   cover this repo, so a drift here shows up only as a refusal at run time.
+2. **Listing texts and review cases** follow the orchestration repo's `docs/listings/`; a fact
+   in a manifest (tool count, what is beta) matches what the server serves today.
+3. **Run both `claude plugin validate` commands.**
+4. **Proportionate:** fix what is false; minor wording drift is noted once and left.
